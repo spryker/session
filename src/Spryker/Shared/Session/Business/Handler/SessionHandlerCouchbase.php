@@ -132,7 +132,7 @@ class SessionHandlerCouchbase implements \SessionHandlerInterface
         $result = $this->connection->getAndTouch($key, $this->lifetime);
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
-        return $result ? json_decode($result, true) : null;
+        return $result ? json_decode($result, true) : '';
     }
 
     /**
