@@ -127,7 +127,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
         $result = $statement->fetch();
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
-        return $result ? json_decode($result['value'], true) : null;
+        return $result ? json_decode($result['value'], true) : '';
     }
 
     /**
