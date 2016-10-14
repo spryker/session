@@ -90,7 +90,7 @@ class SessionHandlerFile implements \SessionHandlerInterface
 
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
-        return $content;
+        return ($content === false) ? '' : $content;
     }
 
     /**
