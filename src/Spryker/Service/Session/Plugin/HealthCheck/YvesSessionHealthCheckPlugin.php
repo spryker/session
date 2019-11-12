@@ -12,10 +12,24 @@ use Spryker\Service\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInte
 use Spryker\Service\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Service\Session\SessionServiceFactory getFactory()
+ * @method \Spryker\Service\Session\SessionService getService()
  */
 class YvesSessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    protected const SERVICE_NAME = 'SERVICE_YVES_SESSION';
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return static::SERVICE_NAME;
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -25,6 +39,6 @@ class YvesSessionHealthCheckPlugin extends AbstractPlugin implements HealthCheck
      */
     public function check(): HealthCheckServiceResponseTransfer
     {
-        // TODO: Implement check() method.
+        return $this->getService()->checkYvesSessionHealthIndicator();
     }
 }

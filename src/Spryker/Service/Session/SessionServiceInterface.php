@@ -15,4 +15,9 @@ interface SessionServiceInterface
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
      */
     public function checkZedSessionHealthIndicator(): HealthCheckServiceResponseTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function checkYvesSessionHealthIndicator(): HealthCheckServiceResponseTransfer;
 }
