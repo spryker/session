@@ -5,16 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Session\Plugin\HealthCheck;
+namespace Spryker\Zed\Session\Communication\Plugin\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
-use Spryker\Service\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
-use Spryker\Service\Kernel\AbstractPlugin;
+use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Service\Session\SessionService getService()
+ * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()()
+ * @method \Spryker\Zed\Session\SessionConfig getConfig()
+ * @method \Spryker\Zed\Session\Business\SessionFacadeInterface getFacade()
  */
-class YvesSessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
+class SessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
     protected const SERVICE_NAME = 'session';
 
@@ -39,6 +41,6 @@ class YvesSessionHealthCheckPlugin extends AbstractPlugin implements HealthCheck
      */
     public function check(): HealthCheckServiceResponseTransfer
     {
-        return $this->getService()->checkYvesSessionHealthIndicator();
+        return $this->getFacade()->executeSessionHealthCheck();
     }
 }

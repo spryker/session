@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Session;
+namespace Spryker\Zed\Session\Business\Model\HealthCheckIndicator;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 
-interface SessionServiceInterface
+interface HealthCheckIndicatorInterface
 {
     /**
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
      */
-    public function checkZedSessionHealthIndicator(): HealthCheckServiceResponseTransfer;
-
-    /**
-     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
-     */
-    public function checkYvesSessionHealthIndicator(): HealthCheckServiceResponseTransfer;
+    public function executeHealthCheck(): HealthCheckServiceResponseTransfer;
 }

@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Session\Plugin\HealthCheck;
+namespace Spryker\Client\Session\Plugin\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
-use Spryker\Service\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
-use Spryker\Service\Kernel\AbstractPlugin;
+use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
 
 /**
- * @method \Spryker\Service\Session\SessionService getService()
+ * @method \Spryker\Client\Session\SessionClient getClient()
+ * @method \Spryker\Client\Session\SessionFactory getFactory()()
  */
-class ZedSessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
+class SessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
     protected const SERVICE_NAME = 'session';
 
@@ -39,6 +40,6 @@ class ZedSessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckP
      */
     public function check(): HealthCheckServiceResponseTransfer
     {
-        return $this->getService()->checkZedSessionHealthIndicator();
+        return $this->getFactory()->createSessionHealthCheckIndicator($this->getClient())->executeHealthCheck();
     }
 }
