@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Session\HealthCheck;
+namespace Spryker\Yves\Session\Model\HealthCheck;
 
 use Exception;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
@@ -13,7 +13,7 @@ use Spryker\Client\Session\SessionClientInterface;
 
 class SessionHealthCheck implements HealthCheckInterface
 {
-    protected const KEY_SESSION_HEALTH_CHECK = 'SESSION_HEALTH_CHECK';
+    protected const KEY_SESSION_YVES_HEALTH_CHECK = 'SESSION_YVES_HEALTH_CHECK';
 
     /**
      * @var \Spryker\Client\Session\SessionClientInterface
@@ -37,8 +37,8 @@ class SessionHealthCheck implements HealthCheckInterface
             ->setStatus(true);
 
         try {
-            $this->sessionClient->set(static::KEY_SESSION_HEALTH_CHECK, 'ok');
-            $this->sessionClient->get(static::KEY_SESSION_HEALTH_CHECK);
+            $this->sessionClient->set(static::KEY_SESSION_YVES_HEALTH_CHECK, 'ok');
+            $this->sessionClient->get(static::KEY_SESSION_YVES_HEALTH_CHECK);
         } catch (Exception $e) {
             return $healthCheckServiceResponseTransfer
                 ->setStatus(false)

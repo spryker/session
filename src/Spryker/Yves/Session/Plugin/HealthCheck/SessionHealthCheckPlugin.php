@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Session\Plugin\HealthCheck;
+namespace Spryker\Yves\Session\Plugin\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
-use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
-use Spryker\Shared\Session\SessionConfig;
+use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Client\Session\SessionClient getClient()
- * @method \Spryker\Client\Session\SessionFactory getFactory()()
+ * @method \Spryker\Yves\Session\SessionFactory getFactory()
  */
 class SessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    public const SESSION_HEALTH_CHECK_SERVICE_NAME = 'session';
+
     /**
      * {@inheritDoc}
      *
@@ -27,7 +27,7 @@ class SessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPlug
      */
     public function getName(): string
     {
-        return SessionConfig::SESSION_SERVICE_NAME;
+        return static::SESSION_HEALTH_CHECK_SERVICE_NAME;
     }
 
     /**
