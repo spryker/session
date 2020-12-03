@@ -13,21 +13,11 @@ use Spryker\Shared\Session\Exception\SessionHandlerNotFoundInSessionHandlerPoolE
 class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
 {
     /**
-     * @var \SessionHandlerInterface[]
+     * @var array
      */
     protected $sessionHandler = [];
 
     /**
-     * @param \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface[] $sessionHandlerProviderPlugins
-     */
-    public function __construct(array $sessionHandlerProviderPlugins = [])
-    {
-        $this->setupSessionHandlersFromPlugins($sessionHandlerProviderPlugins);
-    }
-
-    /**
-     * @deprecated Will be removed with next major release.
-     *
      * @param \SessionHandlerInterface $sessionHandler
      * @param string $sessionHandlerName
      *
@@ -35,15 +25,13 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
      */
     public function addHandler(SessionHandlerInterface $sessionHandler, $sessionHandlerName)
     {
-        if (!isset($this->sessionHandler[$sessionHandlerName])) {
-            $this->sessionHandler[$sessionHandlerName] = $sessionHandler;
-        }
+        $this->sessionHandler[$sessionHandlerName] = $sessionHandler;
 
         return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param string $sessionHandlerName
      *
@@ -64,17 +52,5 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
         );
 
         throw new SessionHandlerNotFoundInSessionHandlerPoolException($message);
-    }
-
-    /**
-     * @param \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface[] $sessionHandlerProviderPlugins
-     *
-     * @return void
-     */
-    protected function setupSessionHandlersFromPlugins(array $sessionHandlerProviderPlugins): void
-    {
-        foreach ($sessionHandlerProviderPlugins as $sessionHandlerProviderPlugin) {
-            $this->sessionHandler[$sessionHandlerProviderPlugin->getSessionHandlerName()] = $sessionHandlerProviderPlugin->getSessionHandler();
-        }
     }
 }

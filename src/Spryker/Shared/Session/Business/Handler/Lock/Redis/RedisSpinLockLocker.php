@@ -11,20 +11,17 @@ use Predis\Client;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface;
 use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
 
-/**
- * @deprecated Use {@link \Spryker\Shared\SessionRedis\Handler\Lock\SessionSpinLockLocker} instead.
- */
 class RedisSpinLockLocker implements SessionLockerInterface
 {
-    public const KEY_SUFFIX = ':lock';
+    const KEY_SUFFIX = ':lock';
 
-    public const DEFAULT_TIMEOUT_MILLISECONDS = 10000;
-    public const DEFAULT_RETRY_DELAY_MICROSECONDS = 10000;
-    public const DEFAULT_LOCK_TTL_MILLISECONDS = 20000;
+    const DEFAULT_TIMEOUT_MILLISECONDS = 10000;
+    const DEFAULT_RETRY_DELAY_MICROSECONDS = 10000;
+    const DEFAULT_LOCK_TTL_MILLISECONDS = 20000;
 
-    public const LOG_METRIC_LOCK_ACQUIRE_TIME = 'Redis/Session_lock_acquire_time';
-    public const LOG_METRIC_LOCK_RELEASE_TIME = 'Redis/Session_lock_release_time';
-    public const LOG_METRIC_LOCK_WAIT_TIME = 'Redis/Session_lock_wait_time';
+    const LOG_METRIC_LOCK_ACQUIRE_TIME = 'Redis/Session_lock_acquire_time';
+    const LOG_METRIC_LOCK_RELEASE_TIME = 'Redis/Session_lock_release_time';
+    const LOG_METRIC_LOCK_WAIT_TIME = 'Redis/Session_lock_wait_time';
 
     /**
      * @var \Predis\Client
@@ -92,10 +89,10 @@ class RedisSpinLockLocker implements SessionLockerInterface
      *
      * @return int
      */
-    protected function getTimeoutMilliseconds($timeoutMilliseconds): int
+    protected function getTimeoutMilliseconds($timeoutMilliseconds)
     {
-        if ($timeoutMilliseconds) {
-            return $timeoutMilliseconds;
+        if ((int)$timeoutMilliseconds) {
+            return (int)$timeoutMilliseconds;
         }
 
         return $this->getMillisecondsFromMaxExecutionTime(static::DEFAULT_TIMEOUT_MILLISECONDS, 0.8);

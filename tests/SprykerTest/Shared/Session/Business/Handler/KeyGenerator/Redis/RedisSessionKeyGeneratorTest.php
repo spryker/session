@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,7 +11,6 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGe
 
 /**
  * Auto-generated group annotations
- *
  * @group SprykerTest
  * @group Shared
  * @group Session
@@ -28,7 +26,7 @@ class RedisSessionKeyGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateAddsPrefix(): void
+    public function testGenerateAddsPrefix()
     {
         $generator = new RedisSessionKeyGenerator();
         $generatedKey = $generator->generateSessionKey('foo-session-123');

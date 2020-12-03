@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -13,7 +13,6 @@ use Spryker\Zed\Session\SessionConfig;
 
 /**
  * Auto-generated group annotations
- *
  * @group SprykerTest
  * @group Zed
  * @group Session
@@ -23,16 +22,16 @@ use Spryker\Zed\Session\SessionConfig;
  */
 class SessionConfigTest extends Unit
 {
-    public const EXPECTED_DSN_TCP_WITHOUT_PASSWORD = 'tcp://10.10.0.1:6435?database=0';
-    public const EXPECTED_DSN_TCP_WITH_PASSWORD = 'tcp://10.10.0.1:6435?database=0&password=secret';
+    const EXPECTED_DSN_TCP_WITHOUT_PASSWORD = 'tcp://10.10.0.1:6435?database=0';
+    const EXPECTED_DSN_TCP_WITH_PASSWORD = 'tcp://10.10.0.1:6435?database=0&password=secret';
 
-    public const EXPECTED_DSN_REDIS_WITHOUT_PASSWORD = 'redis://10.10.0.1:6435/0';
-    public const EXPECTED_DSN_REDIS_WITH_PASSWORD = 'redis://:secret@10.10.0.1:6435/0';
+    const EXPECTED_DSN_REDIS_WITHOUT_PASSWORD = 'redis://10.10.0.1:6435/0';
+    const EXPECTED_DSN_REDIS_WITH_PASSWORD = 'redis://:secret@10.10.0.1:6435/0';
 
     /**
      * @return void
      */
-    public function setUp(): void
+    public function setUp()
     {
         parent::setUp();
 
@@ -48,7 +47,7 @@ class SessionConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetSessionHandlerRedisDataSourceNameZedForTcpProtocolWithoutPassword(): void
+    public function testGetSessionHandlerRedisDataSourceNameZedForTcpProtocolWithoutPassword()
     {
         $this->tester->setConfig(SessionConstants::ZED_SESSION_REDIS_PROTOCOL, 'tcp');
 
@@ -59,7 +58,7 @@ class SessionConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetSessionHandlerRedisDataSourceNameZedForTcpProtocolWithPassword(): void
+    public function testGetSessionHandlerRedisDataSourceNameZedForTcpProtocolWithPassword()
     {
         $this->tester->setConfig(SessionConstants::ZED_SESSION_REDIS_PROTOCOL, 'tcp');
         $this->tester->setConfig(SessionConstants::ZED_SESSION_REDIS_PASSWORD, 'secret');
@@ -71,7 +70,7 @@ class SessionConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetSessionHandlerRedisDataSourceNameZedForRedisProtocolWithoutPassword(): void
+    public function testGetSessionHandlerRedisDataSourceNameZedForRedisProtocolWithoutPassword()
     {
         $this->tester->setConfig(SessionConstants::ZED_SESSION_REDIS_PROTOCOL, 'redis');
 
@@ -82,7 +81,7 @@ class SessionConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetSessionHandlerRedisDataSourceNameZedForRedisProtocolWithPassword(): void
+    public function testGetSessionHandlerRedisDataSourceNameZedForRedisProtocolWithPassword()
     {
         $this->tester->setConfig(SessionConstants::ZED_SESSION_REDIS_PROTOCOL, 'redis');
         $this->tester->setConfig(SessionConstants::ZED_SESSION_REDIS_PASSWORD, 'secret');
@@ -94,7 +93,7 @@ class SessionConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetSessionHandlerRedisDataSourceNameYvesForTcpProtocolWithoutPassword(): void
+    public function testGetSessionHandlerRedisDataSourceNameYvesForTcpProtocolWithoutPassword()
     {
         $this->tester->setConfig(SessionConstants::YVES_SESSION_REDIS_PROTOCOL, 'tcp');
 
@@ -105,7 +104,7 @@ class SessionConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetSessionHandlerRedisDataSourceNameYvesForTcpProtocolWithPassword(): void
+    public function testGetSessionHandlerRedisDataSourceNameYvesForTcpProtocolWithPassword()
     {
         $this->tester->setConfig(SessionConstants::YVES_SESSION_REDIS_PROTOCOL, 'tcp');
         $this->tester->setConfig(SessionConstants::YVES_SESSION_REDIS_PASSWORD, 'secret');
@@ -117,7 +116,7 @@ class SessionConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetSessionHandlerRedisDataSourceNameYvesForRedisProtocolWithoutPassword(): void
+    public function testGetSessionHandlerRedisDataSourceNameYvesForRedisProtocolWithoutPassword()
     {
         $this->tester->setConfig(SessionConstants::YVES_SESSION_REDIS_PROTOCOL, 'redis');
 
@@ -128,7 +127,7 @@ class SessionConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetSessionHandlerRedisDataSourceNameYvesForRedisProtocolWithPassword(): void
+    public function testGetSessionHandlerRedisDataSourceNameYvesForRedisProtocolWithPassword()
     {
         $this->tester->setConfig(SessionConstants::YVES_SESSION_REDIS_PROTOCOL, 'redis');
         $this->tester->setConfig(SessionConstants::YVES_SESSION_REDIS_PASSWORD, 'secret');

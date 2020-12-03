@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -15,7 +14,6 @@ use Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking;
 
 /**
  * Auto-generated group annotations
- *
  * @group SprykerTest
  * @group Shared
  * @group Session
@@ -29,7 +27,7 @@ class SessionHandlerRedisLockingTest extends Unit
     /**
      * @return void
      */
-    public function testReadReturnsEmptyStringOnMissingSessionKey(): void
+    public function testReadReturnsEmptyStringOnMissingSessionKey()
     {
         $redisClientMock = $this->getRedisClientMock(null);
         $lockerMock = $this->getRedisSpinLockLockerMock();
@@ -43,7 +41,7 @@ class SessionHandlerRedisLockingTest extends Unit
     /**
      * @return void
      */
-    public function testReadDecodesLegacyJsonSession(): void
+    public function testReadDecodesLegacyJsonSession()
     {
         $redisClientMock = $this->getRedisClientMock(json_encode('foo bar baz'));
         $lockerMock = $this->getRedisSpinLockLockerMock();
@@ -55,11 +53,11 @@ class SessionHandlerRedisLockingTest extends Unit
     }
 
     /**
-     * @param string|null $returnValue
+     * @param null|string $returnValue
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Predis\Client
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Predis\Client
      */
-    private function getRedisClientMock(?string $returnValue): Client
+    private function getRedisClientMock($returnValue)
     {
         $redisClientMock = $this
             ->getMockBuilder(Client::class)
@@ -75,9 +73,9 @@ class SessionHandlerRedisLockingTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker
      */
-    private function getRedisSpinLockLockerMock(): RedisSpinLockLocker
+    private function getRedisSpinLockLockerMock()
     {
         $lockerMock = $this
             ->getMockBuilder(RedisSpinLockLocker::class)
@@ -98,7 +96,7 @@ class SessionHandlerRedisLockingTest extends Unit
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking
      */
-    private function getSessionHandlerRedisLocking(Client $redisClientMock, RedisSpinLockLocker $lockerMock): SessionHandlerRedisLocking
+    private function getSessionHandlerRedisLocking(Client $redisClientMock, RedisSpinLockLocker $lockerMock)
     {
         $sessionHandler = new SessionHandlerRedisLocking(
             $redisClientMock,

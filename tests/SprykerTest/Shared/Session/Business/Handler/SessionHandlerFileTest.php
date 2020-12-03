@@ -8,15 +8,13 @@
 namespace SprykerTest\Shared\Session\Business\Handler;
 
 use Codeception\Test\Unit;
-use Spryker\Service\Monitoring\MonitoringServiceInterface;
+use Spryker\Shared\NewRelicApi\NewRelicApi;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
-use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceBridge;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
  * Auto-generated group annotations
- *
  * @group SprykerTest
  * @group Shared
  * @group Session
@@ -27,19 +25,19 @@ use Symfony\Component\Finder\Finder;
  */
 class SessionHandlerFileTest extends Unit
 {
-    public const LIFETIME = 20;
+    const LIFETIME = 20;
 
-    public const SESSION_NAME = 'sessionName';
+    const SESSION_NAME = 'sessionName';
 
-    public const SESSION_ID = 'sessionId';
-    public const SESSION_ID_2 = 'anotherSessionId';
+    const SESSION_ID = 'sessionId';
+    const SESSION_ID_2 = 'anotherSessionId';
 
-    public const SESSION_DATA = 'sessionData';
+    const SESSION_DATA = 'sessionData';
 
     /**
      * @return void
      */
-    public function tearDown(): void
+    public function tearDown()
     {
         if (is_dir($this->getFixtureDirectory())) {
             $filesystem = new Filesystem();
@@ -50,7 +48,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return string
      */
-    private function getFixtureDirectory(): string
+    private function getFixtureDirectory()
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures';
     }
@@ -58,7 +56,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return string
      */
-    protected function getSavePath(): string
+    protected function getSavePath()
     {
         return $this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'Sessions';
     }
@@ -66,11 +64,11 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallOpenMustCreateDirectoryIfNotExists(): void
+    public function testCallOpenMustCreateDirectoryIfNotExists()
     {
         $this->assertFalse(is_dir($this->getSavePath()));
 
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
 
         $this->assertTrue(is_dir($this->getSavePath()));
@@ -79,9 +77,9 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallOpenMustReturnTrue(): void
+    public function testCallOpenMustReturnTrue()
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
         $result = $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
 
         $this->assertTrue($result);
@@ -90,9 +88,9 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallCloseMustReturnTrue(): void
+    public function testCallCloseMustReturnTrue()
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
         $result = $sessionHandlerFile->close();
 
         $this->assertTrue($result);
@@ -101,9 +99,9 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallWriteMustReturnFalseIfNoDataPassed(): void
+    public function testCallWriteMustReturnFalseIfNoDataPassed()
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
         $result = $sessionHandlerFile->write(self::SESSION_ID, '');
 
@@ -113,9 +111,9 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallWriteMustReturnTrueWhenDataCanBeWrittenToFile(): void
+    public function testCallWriteMustReturnTrueWhenDataCanBeWrittenToFile()
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
         $result = $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
 
@@ -125,9 +123,9 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testWriteMustAllowZeroValue(): void
+    public function testWriteMustAllowZeroValue()
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
         $result = $sessionHandlerFile->write(self::SESSION_ID, '0');
 
@@ -137,9 +135,9 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallReadMustReturnContentOfSessionForGivenSessionId(): void
+    public function testCallReadMustReturnContentOfSessionForGivenSessionId()
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
         $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
 
@@ -151,9 +149,9 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallDestroyMustReturnTrueIfNoFileExistsForSessionId(): void
+    public function testCallDestroyMustReturnTrueIfNoFileExistsForSessionId()
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
 
         $result = $sessionHandlerFile->destroy(self::SESSION_ID);
@@ -164,9 +162,9 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallDestroyMustReturnTrueIfFileExistsForSessionId(): void
+    public function testCallDestroyMustReturnTrueIfFileExistsForSessionId()
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
         $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
 
@@ -178,9 +176,9 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function testCallGcMustDeleteFilesWhichAreOlderThenMaxLifetime(): void
+    public function testCallGcMustDeleteFilesWhichAreOlderThenMaxLifetime()
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
         $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
         $this->makeFileOlderThanItIs();
@@ -202,7 +200,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    protected function makeFileOlderThanItIs(): void
+    protected function makeFileOlderThanItIs()
     {
         touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . self::SESSION_ID, time() - 200);
     }
@@ -210,22 +208,20 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    protected function makeFileNewerThanItIs(): void
+    protected function makeFileNewerThanItIs()
     {
         touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . self::SESSION_ID_2, time() + 200);
     }
 
     /**
-     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceBridge
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
-    protected function createMonitoringServiceMock(): SessionToMonitoringServiceBridge
+    protected function createNewRelicApiMock()
     {
-        $mock = $this->getMockBuilder(MonitoringServiceInterface::class)
+        $mock = $this->getMockBuilder(NewRelicApi::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $sessionToMonitoringServiceBridge = new SessionToMonitoringServiceBridge($mock);
-
-        return $sessionToMonitoringServiceBridge;
+        return $mock;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -15,7 +15,6 @@ use Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker;
 
 /**
  * Auto-generated group annotations
- *
  * @group SprykerTest
  * @group Shared
  * @group Session
@@ -31,7 +30,7 @@ class RedisSpinLockLockerTest extends Unit
     /**
      * @return void
      */
-    public function testLockBlocksUntilLockIsAcquired(): void
+    public function testLockBlocksUntilLockIsAcquired()
     {
         $redisClientMock = $this->getRedisClientMock();
         $redisClientMock
@@ -47,12 +46,8 @@ class RedisSpinLockLockerTest extends Unit
     /**
      * @return void
      */
-    public function testUnlockUsesGeneratedKeyFromStoredSessionId(): void
+    public function testUnlockUsesGeneratedKeyFromStoredSessionId()
     {
-        if (!method_exists($this, 'contains')) {
-            $this->markTestSkipped('Contains method is not supported in PHPUnit 9, this tests needs refactoring.');
-        }
-
         $sessionId = 'test_session_id';
         $expectedGeneratedKey = "session:{$sessionId}:lock";
         $redisClientMock = $this->getRedisClientMock();
@@ -71,9 +66,9 @@ class RedisSpinLockLockerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Predis\Client
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Predis\Client
      */
-    private function getRedisClientMock(): Client
+    private function getRedisClientMock()
     {
         return $this
             ->getMockBuilder(Client::class)

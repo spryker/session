@@ -9,21 +9,34 @@ namespace Spryker\Zed\Session\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @deprecated Use {@link \Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin} instead.
- * @deprecated Use {@link \Spryker\Yves\Session\Plugin\EventDispatcher\SessionEventDispatcherPlugin} instead.
- *
  * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
  * @method \Spryker\Zed\Session\Business\SessionFacadeInterface getFacade()
- * @method \Spryker\Zed\Session\SessionConfig getConfig()
  */
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @deprecated Please don't use this property anymore. The needed ClientInterface is now retrieved by the Factory.
+     *
+     * @var \Spryker\Client\Session\SessionClientInterface
+     */
+    private $client;
+
+    /**
+     * @deprecated Please remove usage of this setter. The needed ClientInterface is now retrieved by the Factory.
+     *
+     * @param \Spryker\Client\Session\SessionClientInterface $client
+     *
+     * @return void
+     */
+    public function setClient(SessionClientInterface $client)
+    {
+        $this->client = $client;
+    }
+
     /**
      * @param \Silex\Application $application
      *
@@ -70,41 +83,6 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
         $session = $this->getSession($application);
         $this->getSessionClient()->setContainer($session);
-        $application['dispatcher']->addListener(KernelEvents::RESPONSE, [$this, 'extendCookieLifetime'], -128);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
-     *
-     * @return void
-     */
-    public function extendCookieLifetime(ResponseEvent $event): void
-    {
-        if ($event->isMasterRequest() === false) {
-            return;
-        }
-
-        $request = $event->getRequest();
-
-        $session = $request->hasPreviousSession() ? $request->getSession() : null;
-
-        if ($session === null || $session->isStarted() === false) {
-            return;
-        }
-
-        $session->save();
-
-        $params = session_get_cookie_params();
-
-        $event->getResponse()->headers->setCookie(new Cookie(
-            $session->getName(),
-            $session->getId(),
-            $params['lifetime'] === 0 ? 0 : time() + $params['lifetime'],
-            $params['path'],
-            $params['domain'],
-            $params['secure'],
-            $params['httponly']
-        ));
     }
 
     /**
@@ -112,7 +90,11 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     protected function getSessionClient()
     {
-        return $this->getFactory()->getSessionClient();
+        if (!$this->client) {
+            return $this->getFactory()->getSessionClient();
+        }
+
+        return $this->client;
     }
 
     /**

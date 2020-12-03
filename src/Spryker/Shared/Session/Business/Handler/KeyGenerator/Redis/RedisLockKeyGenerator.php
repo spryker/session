@@ -10,12 +10,9 @@ namespace Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface;
 
-/**
- * @deprecated Use {@link \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilder} instead.
- */
 class RedisLockKeyGenerator implements LockKeyGeneratorInterface
 {
-    public const KEY_SUFFIX = ':lock';
+    const KEY_SUFFIX = ':lock';
 
     /**
      * @var \Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface

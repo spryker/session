@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -14,7 +14,6 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
 
 /**
  * Auto-generated group annotations
- *
  * @group SprykerTest
  * @group Shared
  * @group Session
@@ -26,12 +25,12 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
  */
 class SessionStorageHandlerPoolTest extends Unit
 {
-    public const CONFIGURED_HANDLER_NAME = 'handler name';
+    const CONFIGURED_HANDLER_NAME = 'handler name';
 
     /**
      * @return void
      */
-    public function testGetHandlerReturnsAddedHandlerWhichMatchesConfiguredHandlerName(): void
+    public function testGetHandlerReturnsAddedHandlerWhichMatchesConfiguredHandlerName()
     {
         $sessionHandlerInterfaceMock = $this->getSessionHandlerInterfaceMock();
 
@@ -44,7 +43,7 @@ class SessionStorageHandlerPoolTest extends Unit
     /**
      * @return void
      */
-    public function testGetHandlerThrowsExceptionWhenTryingToGetNotAddedHandler(): void
+    public function testGetHandlerThrowsExceptionWhenTryingToGetNotAddedHandler()
     {
         $this->expectException(SessionHandlerNotFoundInSessionHandlerPoolException::class);
 
@@ -53,9 +52,9 @@ class SessionStorageHandlerPoolTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\SessionHandlerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\SessionHandlerInterface
      */
-    protected function getSessionHandlerInterfaceMock(): SessionHandlerInterface
+    protected function getSessionHandlerInterfaceMock()
     {
         return $this->getMockBuilder(SessionHandlerInterface::class)->getMock();
     }

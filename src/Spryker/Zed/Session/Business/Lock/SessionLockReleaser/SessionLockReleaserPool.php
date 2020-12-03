@@ -13,21 +13,11 @@ use Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface;
 class SessionLockReleaserPool implements SessionLockReleaserPoolInterface
 {
     /**
-     * @var \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface[]|\Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface[]
+     * @var array
      */
     protected $lockReleaser;
 
     /**
-     * @param \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface[] $sessionLockReleaserPlugins
-     */
-    public function __construct(array $sessionLockReleaserPlugins = [])
-    {
-        $this->addSessionLockReleaserPlugins($sessionLockReleaserPlugins);
-    }
-
-    /**
-     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} implementation instead.
-     *
      * @param \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface $lockReleaser
      * @param string $handlerName
      *
@@ -35,9 +25,7 @@ class SessionLockReleaserPool implements SessionLockReleaserPoolInterface
      */
     public function addLockReleaser(SessionLockReleaserInterface $lockReleaser, $handlerName)
     {
-        if (!isset($this->lockReleaser[$handlerName])) {
-            $this->lockReleaser[$handlerName] = $lockReleaser;
-        }
+        $this->lockReleaser[$handlerName] = $lockReleaser;
 
         return $this;
     }
@@ -47,7 +35,7 @@ class SessionLockReleaserPool implements SessionLockReleaserPoolInterface
      *
      * @throws \Spryker\Zed\Session\Business\Exception\NotALockingSessionHandlerException
      *
-     * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface|\Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface
+     * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface
      */
     public function getLockReleaser($handlerName)
     {
@@ -59,17 +47,5 @@ class SessionLockReleaserPool implements SessionLockReleaserPoolInterface
             'The configured session handler "%s" doesn\'t seem to support locking',
             $handlerName
         ));
-    }
-
-    /**
-     * @param \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface[] $sessionLockReleaserPlugins
-     *
-     * @return void
-     */
-    protected function addSessionLockReleaserPlugins(array $sessionLockReleaserPlugins): void
-    {
-        foreach ($sessionLockReleaserPlugins as $sessionLockReleaserPlugin) {
-            $this->lockReleaser[$sessionLockReleaserPlugin->getSessionHandlerName()] = $sessionLockReleaserPlugin;
-        }
     }
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Session\Communication;
 
 use Spryker\Shared\Session\Business\Model\SessionFactory;
-use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 
 class SessionHandlerFactory extends SessionFactory
 {
@@ -18,18 +17,11 @@ class SessionHandlerFactory extends SessionFactory
     protected $sessionLifeTime;
 
     /**
-     * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
-     */
-    protected $monitoringService;
-
-    /**
      * @param int $sessionLifeTime
-     * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
      */
-    public function __construct(int $sessionLifeTime, SessionToMonitoringServiceInterface $monitoringService)
+    public function __construct($sessionLifeTime)
     {
         $this->sessionLifeTime = $sessionLifeTime;
-        $this->monitoringService = $monitoringService;
     }
 
     /**
@@ -38,13 +30,5 @@ class SessionHandlerFactory extends SessionFactory
     protected function getSessionLifetime()
     {
         return $this->sessionLifeTime;
-    }
-
-    /**
-     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
-     */
-    public function getMonitoringService(): SessionToMonitoringServiceInterface
-    {
-        return $this->monitoringService;
     }
 }

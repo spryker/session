@@ -8,16 +8,12 @@
 namespace Spryker\Zed\Session\Business;
 
 use Predis\Client;
-use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
-use Spryker\Shared\Session\SessionConfig;
+use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Session\Business\Lock\Redis\RedisSessionLockReader;
 use Spryker\Zed\Session\Business\Lock\SessionLockReleaser;
 use Spryker\Zed\Session\Business\Lock\SessionLockReleaser\SessionLockReleaserPool;
-use Spryker\Zed\Session\Business\Model\HealthCheck\HealthCheckInterface;
-use Spryker\Zed\Session\Business\Model\HealthCheck\SessionHealthCheck;
 use Spryker\Zed\Session\Business\Model\SessionFactory;
-use Spryker\Zed\Session\SessionDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Session\SessionConfig getConfig()
@@ -25,7 +21,7 @@ use Spryker\Zed\Session\SessionDependencyProvider;
 class SessionBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface|\Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface
+     * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface
      */
     public function createYvesSessionLockReleaser()
     {
@@ -38,28 +34,19 @@ class SessionBusinessFactory extends AbstractBusinessFactory
      */
     protected function createYvesSessionLockReleaserPool()
     {
-        $sessionLockReleaserPool = new SessionLockReleaserPool(
-            $this->getYvesSessionLockReleaserPlugins()
+        $sessionLockReleaserPool = new SessionLockReleaserPool();
+        $sessionLockReleaserPool->addLockReleaser(
+            $this->createRedisSessionLockReleaser(
+                $this->getConfig()->getSessionHandlerRedisDataSourceNameYves()
+            ),
+            SessionConstants::SESSION_HANDLER_REDIS_LOCKING
         );
-
-        /**
-         * This check was added because of BC and will be removed in the next major release.
-         */
-        if (!$this->getYvesSessionLockReleaserPlugins()) {
-            $sessionLockReleaserPool->addLockReleaser(
-                $this->createRedisSessionLockReleaser(
-                    $this->getConfig()->getSessionHandlerRedisConnectionParametersYves(),
-                    $this->getConfig()->getSessionHandlerRedisConnectionOptionsYves()
-                ),
-                SessionConfig::SESSION_HANDLER_REDIS_LOCKING
-            );
-        }
 
         return $sessionLockReleaserPool;
     }
 
     /**
-     * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface|\Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface
+     * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface
      */
     public function createZedSessionLockReleaser()
     {
@@ -72,37 +59,25 @@ class SessionBusinessFactory extends AbstractBusinessFactory
      */
     protected function createZedSessionLockReleaserPool()
     {
-        $sessionLockReleaserPool = new SessionLockReleaserPool(
-            $this->getZedSessionLockReleaserPlugins()
+        $sessionLockReleaserPool = new SessionLockReleaserPool();
+        $sessionLockReleaserPool->addLockReleaser(
+            $this->createRedisSessionLockReleaser(
+                $this->getConfig()->getSessionHandlerRedisDataSourceNameZed()
+            ),
+            SessionConstants::SESSION_HANDLER_REDIS_LOCKING
         );
-
-        /**
-         * This check was added because of BC and will be removed in the next major release.
-         */
-        if (!$this->getZedSessionLockReleaserPlugins()) {
-            $sessionLockReleaserPool->addLockReleaser(
-                $this->createRedisSessionLockReleaser(
-                    $this->getConfig()->getSessionHandlerRedisConnectionParametersZed(),
-                    $this->getConfig()->getSessionHandlerRedisConnectionOptionsZed()
-                ),
-                SessionConfig::SESSION_HANDLER_REDIS_LOCKING
-            );
-        }
 
         return $sessionLockReleaserPool;
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
-     *
-     * @param array|string $connectionParameters
-     * @param array $connectionOptions
+     * @param string $dsn
      *
      * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface
      */
-    protected function createRedisSessionLockReleaser($connectionParameters, array $connectionOptions = [])
+    protected function createRedisSessionLockReleaser($dsn)
     {
-        $redisClient = $this->getRedisClient($connectionParameters, $connectionOptions);
+        $redisClient = $this->getRedisClient($dsn);
 
         return new SessionLockReleaser(
             $this->getRedisSessionLocker($redisClient),
@@ -111,23 +86,18 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
-     *
-     * @param array|string $connectionParameters
-     * @param array $connectionOptions
+     * @param string $dsn
      *
      * @return \Predis\Client
      */
-    protected function getRedisClient($connectionParameters, array $connectionOptions = [])
+    protected function getRedisClient($dsn)
     {
         return $this
             ->createSessionHandlerFactory()
-            ->createRedisClient($connectionParameters, $connectionOptions);
+            ->createRedisClient($dsn);
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
-     *
      * @param \Predis\Client $redisClient
      *
      * @return \Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface
@@ -140,45 +110,14 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
-     *
      * @return \Spryker\Zed\Session\Business\Model\SessionFactory
      */
     protected function createSessionHandlerFactory()
     {
-        return new SessionFactory(
-            $this->getConfig()->getSessionLifeTime(),
-            $this->getMonitoringService()
-        );
+        return new SessionFactory();
     }
 
     /**
-     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
-     */
-    public function getMonitoringService(): SessionToMonitoringServiceInterface
-    {
-        return $this->getProvidedDependency(SessionDependencyProvider::MONITORING_SERVICE);
-    }
-
-    /**
-     * @return \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface[]
-     */
-    public function getYvesSessionLockReleaserPlugins(): array
-    {
-        return $this->getProvidedDependency(SessionDependencyProvider::PLUGINS_YVES_SESSION_LOCK_RELEASER);
-    }
-
-    /**
-     * @return \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface[]
-     */
-    public function getZedSessionLockReleaserPlugins(): array
-    {
-        return $this->getProvidedDependency(SessionDependencyProvider::PLUGINS_ZED_SESSION_LOCK_RELEASER);
-    }
-
-    /**
-     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
-     *
      * @param \Predis\Client $redisClient
      *
      * @return \Spryker\Zed\Session\Business\Lock\SessionLockReaderInterface
@@ -192,8 +131,6 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
-     *
      * @return \Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface
      */
     protected function createRedisLockKeyGenerator()
@@ -204,20 +141,22 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Session\Business\Model\HealthCheck\HealthCheckInterface
+     * @deprecated Use `$this->getConfig()->getSessionHandlerRedisDataSourceNameYves()` instead.
+     *
+     * @return string
      */
-    public function createSessionHealthChecker(): HealthCheckInterface
+    protected function buildYvesRedisDsn()
     {
-        return new SessionHealthCheck(
-            $this->getSessionClient()
-        );
+        return $this->getConfig()->getSessionHandlerRedisDataSourceNameYves();
     }
 
     /**
-     * @return \Spryker\Client\Session\SessionClientInterface
+     * @deprecated Use `$this->getConfig()->getSessionHandlerRedisDataSourceNameZed()` instead.
+     *
+     * @return string
      */
-    public function getSessionClient()
+    protected function buildZedRedisDsn()
     {
-        return $this->getProvidedDependency(SessionDependencyProvider::SESSION_CLIENT);
+        return $this->getConfig()->getSessionHandlerRedisDataSourceNameZed();
     }
 }

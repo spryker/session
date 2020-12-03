@@ -12,22 +12,20 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class SessionConfig extends AbstractBundleConfig
 {
-    public const PROTOCOL_TCP = 'tcp';
+    const PROTOCOL_TCP = 'tcp';
 
-    public const DATA_SOURCE_NAME_TEMPLATE_TCP = 'tcp://[host]:[port]?database=[database][authFragment]';
-    public const AUTH_FRAGMENT_TEMPLATE_TCP = '&password=%s';
+    const DATA_SOURCE_NAME_TEMPLATE_TCP = 'tcp://[host]:[port]?database=[database][authFragment]';
+    const AUTH_FRAGMENT_TEMPLATE_TCP = '&password=%s';
 
-    public const DATA_SOURCE_NAME_TEMPLATE_REDIS = 'redis://[authFragment][host]:[port]/[database]';
-    public const AUTH_FRAGMENT_TEMPLATE_REDIS = ':%s@';
+    const DATA_SOURCE_NAME_TEMPLATE_REDIS = 'redis://[authFragment][host]:[port]/[database]';
+    const AUTH_FRAGMENT_TEMPLATE_REDIS = ':%s@';
 
     /**
      * Default Redis database number
      */
-    public const DEFAULT_REDIS_DATABASE = 0;
+    const DEFAULT_REDIS_DATABASE = 0;
 
     /**
-     * @api
-     *
      * @return array
      */
     public function getSessionStorageOptions()
@@ -39,7 +37,6 @@ class SessionConfig extends AbstractBundleConfig
             'cookie_domain' => $this->getSessionCookieDomain(),
             'cookie_path' => $this->getSessionCookiePath(),
             'cookie_httponly' => true,
-            'cookie_samesite' => $this->get(SessionConstants::YVES_SESSION_COOKIE_SAMESITE, ''),
         ];
 
         return $sessionStorageOptions;
@@ -81,8 +78,6 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getConfiguredSessionHandlerName()
@@ -91,8 +86,6 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
-     * @api
-     *
      * @return int
      */
     public function getSessionLifeTime()
@@ -101,28 +94,6 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
-     *
-     * @return array|string
-     */
-    public function getSessionHandlerRedisConnectionParameters()
-    {
-        $connectionConfiguration = $this->get(SessionConstants::YVES_SESSION_PREDIS_CLIENT_CONFIGURATION, []);
-
-        if ($connectionConfiguration) {
-            return $connectionConfiguration;
-        }
-
-        return $this->getSessionHandlerRedisDataSourceName();
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
-     *
      * @return string
      */
     public function getSessionHandlerRedisDataSourceName()
@@ -137,20 +108,6 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
-     *
-     * @return array
-     */
-    public function getSessionHandlerRedisConnectionOptions(): array
-    {
-        return $this->get(SessionConstants::YVES_SESSION_PREDIS_CLIENT_OPTIONS, []);
-    }
-
-    /**
-     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
-     *
      * @param string $protocol
      * @param string $host
      * @param int $port
@@ -183,8 +140,6 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
-     *
      * @param string $protocol
      *
      * @return string
@@ -195,8 +150,6 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
-     *
      * @param string $protocol
      *
      * @return string
@@ -207,10 +160,6 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
-     *
      * @return string
      */
     public function getSessionHandlerFileSavePath()

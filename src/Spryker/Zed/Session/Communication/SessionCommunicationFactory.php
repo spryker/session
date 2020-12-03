@@ -7,22 +7,15 @@
 
 namespace Spryker\Zed\Session\Communication;
 
-use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 use Spryker\Shared\Session\Model\SessionStorage;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptions;
-use Spryker\Shared\Session\SessionConfig;
+use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Session\Communication\EventListener\SaveSessionListener;
 use Spryker\Zed\Session\SessionDependencyProvider;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 
 /**
  * @method \Spryker\Zed\Session\SessionConfig getConfig()
- * @method \Spryker\Zed\Session\Business\SessionFacadeInterface getFacade()
  */
 class SessionCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -51,52 +44,36 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createSessionStorageHandlerPool()
     {
-        $sessionHandlerPool = new SessionStorageHandlerPool(
-            $this->getSessionHandlerPlugins()
-        );
-
-        /**
-         * This check was added because of BC and will be removed in the next major release.
-         */
-        if (!$this->getSessionHandlerPlugins()) {
-            $sessionHandlerPool
-                ->addHandler($this->createSessionHandlerRedis(), SessionConfig::SESSION_HANDLER_REDIS)
-                ->addHandler($this->createSessionHandlerRedisLocking(), SessionConfig::SESSION_HANDLER_REDIS_LOCKING)
-                ->addHandler($this->createSessionHandlerFile(), SessionConfig::SESSION_HANDLER_FILE);
-        }
+        $sessionHandlerPool = new SessionStorageHandlerPool();
+        $sessionHandlerPool
+            ->addHandler($this->createSessionHandlerRedis(), SessionConstants::SESSION_HANDLER_REDIS)
+            ->addHandler($this->createSessionHandlerRedisLocking(), SessionConstants::SESSION_HANDLER_REDIS_LOCKING)
+            ->addHandler($this->createSessionHandlerFile(), SessionConstants::SESSION_HANDLER_FILE);
 
         return $sessionHandlerPool;
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
-     *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis|\SessionHandlerInterface
      */
     protected function createSessionHandlerRedis()
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerRedis(
-            $this->getConfig()->getSessionHandlerRedisConnectionParametersZed(),
-            $this->getConfig()->getSessionHandlerRedisConnectionOptionsZed()
+            $this->getConfig()->getSessionHandlerRedisDataSourceNameZed()
         );
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory::createSessionHandlerRedisLocking()} instead.
-     *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking|\SessionHandlerInterface
      */
     protected function createSessionHandlerRedisLocking()
     {
         return $this->createSessionHandlerFactory()->createRedisLockingSessionHandler(
-            $this->getConfig()->getSessionHandlerRedisConnectionParametersZed(),
-            $this->getConfig()->getSessionHandlerRedisConnectionOptionsZed()
+            $this->getConfig()->getSessionHandlerRedisDataSourceNameZed()
         );
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\SessionFile\Communication\SessionFileCommunicationFactory::createSessionHandlerFile()} instead.
-     *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking|\SessionHandlerInterface
      */
     protected function createSessionHandlerFile()
@@ -107,32 +84,11 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory::createSessionHandlerFactory()} instead.
-     *
      * @return \Spryker\Zed\Session\Communication\SessionHandlerFactory
      */
     protected function createSessionHandlerFactory()
     {
-        return new SessionHandlerFactory(
-            $this->getConfig()->getSessionLifeTime(),
-            $this->getMonitoringService()
-        );
-    }
-
-    /**
-     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
-     */
-    public function getMonitoringService(): SessionToMonitoringServiceInterface
-    {
-        return $this->getProvidedDependency(SessionDependencyProvider::MONITORING_SERVICE);
-    }
-
-    /**
-     * @return \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface[]
-     */
-    protected function getSessionHandlerPlugins(): array
-    {
-        return $this->getProvidedDependency(SessionDependencyProvider::PLUGINS_SESSION_HANDLER);
+        return new SessionHandlerFactory($this->getConfig()->getSessionLifeTime());
     }
 
     /**
@@ -141,31 +97,5 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     public function getSessionClient()
     {
         return $this->getProvidedDependency(SessionDependencyProvider::SESSION_CLIENT);
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
-     */
-    public function createMockSessionStorage(): SessionStorageInterface
-    {
-        return new MockFileSessionStorage();
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
-     */
-    public function createNativeSessionStorage(): SessionStorageInterface
-    {
-        $sessionStorage = $this->createSessionStorage();
-
-        return new NativeSessionStorage($sessionStorage->getOptions(), $sessionStorage->getAndRegisterHandler());
-    }
-
-    /**
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
-     */
-    public function createSaveSessionEventSubscriber(): EventSubscriberInterface
-    {
-        return new SaveSessionListener();
     }
 }

@@ -8,16 +8,13 @@
 namespace Spryker\Shared\Session\Business\Handler;
 
 use SessionHandlerInterface;
-use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
+use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
-/**
- * @deprecated Use {@link \Spryker\Shared\SessionFile\Handler\SessionHandlerFile} instead.
- */
 class SessionHandlerFile implements SessionHandlerInterface
 {
-    public const METRIC_SESSION_DELETE_TIME = 'File/Session_delete_time';
-    public const METRIC_SESSION_WRITE_TIME = 'File/Session_write_time';
-    public const METRIC_SESSION_READ_TIME = 'File/Session_read_time';
+    const METRIC_SESSION_DELETE_TIME = 'File/Session_delete_time';
+    const METRIC_SESSION_WRITE_TIME = 'File/Session_write_time';
+    const METRIC_SESSION_READ_TIME = 'File/Session_read_time';
 
     /**
      * @var string
@@ -35,20 +32,20 @@ class SessionHandlerFile implements SessionHandlerInterface
     protected $savePath;
 
     /**
-     * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
+     * @var \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
-    protected $monitoringService;
+    protected $newRelicApi;
 
     /**
      * @param string $savePath
      * @param int $lifetime
-     * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
+     * @param \Spryker\Shared\NewRelicApi\NewRelicApiInterface $newRelicApi
      */
-    public function __construct($savePath, $lifetime, SessionToMonitoringServiceInterface $monitoringService)
+    public function __construct($savePath, $lifetime, NewRelicApiInterface $newRelicApi)
     {
         $this->savePath = $savePath;
         $this->lifetime = $lifetime;
-        $this->monitoringService = $monitoringService;
+        $this->newRelicApi = $newRelicApi;
     }
 
     /**
@@ -90,7 +87,7 @@ class SessionHandlerFile implements SessionHandlerInterface
 
         $content = file_get_contents($sessionFile);
 
-        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
+        $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
         return ($content === false) ? '' : $content;
     }
@@ -111,7 +108,7 @@ class SessionHandlerFile implements SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = file_put_contents($this->savePath . DIRECTORY_SEPARATOR . $key, $sessionData);
-        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
+        $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
         return $result > 0;
     }
@@ -128,7 +125,7 @@ class SessionHandlerFile implements SessionHandlerInterface
         if (file_exists($file)) {
             $startTime = microtime(true);
             unlink($file);
-            $this->monitoringService->addCustomParameter(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
+            $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
         }
 
         return true;
