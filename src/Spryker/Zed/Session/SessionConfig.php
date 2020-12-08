@@ -107,12 +107,32 @@ class SessionConfig extends AbstractBundleConfig
      */
     public function getSessionHandlerRedisDataSourceNameZed()
     {
+        if (!$this->getIsRedisSessionHandler($this->getConfiguredSessionHandlerNameZed())) {
+            return '';
+        }
+
         return $this->buildDataSourceName(
-            $this->get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL),
-            $this->get(SessionConstants::ZED_SESSION_REDIS_HOST),
-            $this->get(SessionConstants::ZED_SESSION_REDIS_PORT),
+            $this->get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL, ''),
+            $this->get(SessionConstants::ZED_SESSION_REDIS_HOST, ''),
+            $this->get(SessionConstants::ZED_SESSION_REDIS_PORT, ''),
             $this->get(SessionConstants::ZED_SESSION_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
             $this->get(SessionConstants::ZED_SESSION_REDIS_PASSWORD, false)
+        );
+    }
+
+    /**
+     * @param string $configuredSessionHandlerName
+     *
+     * @return bool
+     */
+    protected function getIsRedisSessionHandler(string $configuredSessionHandlerName): bool
+    {
+        return in_array(
+            $configuredSessionHandlerName,
+            [
+                SessionConstants::SESSION_HANDLER_REDIS,
+                SessionConstants::SESSION_HANDLER_REDIS_LOCKING,
+            ]
         );
     }
 
@@ -173,10 +193,14 @@ class SessionConfig extends AbstractBundleConfig
      */
     public function getSessionHandlerRedisDataSourceNameYves()
     {
+        if (!$this->getIsRedisSessionHandler($this->getConfiguredSessionHandlerNameYves())) {
+            return '';
+        }
+
         return $this->buildDataSourceName(
-            $this->get(SessionConstants::YVES_SESSION_REDIS_PROTOCOL),
-            $this->get(SessionConstants::YVES_SESSION_REDIS_HOST),
-            $this->get(SessionConstants::YVES_SESSION_REDIS_PORT),
+            $this->get(SessionConstants::YVES_SESSION_REDIS_PROTOCOL, ''),
+            $this->get(SessionConstants::YVES_SESSION_REDIS_HOST, ''),
+            $this->get(SessionConstants::YVES_SESSION_REDIS_PORT, ''),
             $this->get(SessionConstants::YVES_SESSION_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
             $this->get(SessionConstants::YVES_SESSION_REDIS_PASSWORD, false)
         );
