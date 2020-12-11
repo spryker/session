@@ -107,7 +107,7 @@ class SessionConfig extends AbstractBundleConfig
      */
     public function getSessionHandlerRedisDataSourceNameZed()
     {
-        if (!$this->getIsRedisSessionHandler($this->getConfiguredSessionHandlerNameZed())) {
+        if (!$this->isRedisSessionHandler($this->getConfiguredSessionHandlerNameZed())) {
             return '';
         }
 
@@ -125,14 +125,15 @@ class SessionConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    protected function getIsRedisSessionHandler(string $configuredSessionHandlerName): bool
+    protected function isRedisSessionHandler(string $configuredSessionHandlerName): bool
     {
         return in_array(
             $configuredSessionHandlerName,
             [
                 SessionConstants::SESSION_HANDLER_REDIS,
                 SessionConstants::SESSION_HANDLER_REDIS_LOCKING,
-            ]
+            ],
+            true
         );
     }
 
@@ -193,7 +194,7 @@ class SessionConfig extends AbstractBundleConfig
      */
     public function getSessionHandlerRedisDataSourceNameYves()
     {
-        if (!$this->getIsRedisSessionHandler($this->getConfiguredSessionHandlerNameYves())) {
+        if (!$this->isRedisSessionHandler($this->getConfiguredSessionHandlerNameYves())) {
             return '';
         }
 
