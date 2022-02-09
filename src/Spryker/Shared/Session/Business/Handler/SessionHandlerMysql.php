@@ -222,7 +222,6 @@ class SessionHandlerMysql implements SessionHandlerInterface
           UNIQUE KEY `key` (`key`)
         ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;";
 
-        /** @var \PDOStatement $statement */
         $statement = $this->connection->query($query);
         $statement->execute();
     }

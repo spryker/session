@@ -1,5 +1,5 @@
 parameters:
-    level: 7
+    level: 6
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Property .+SessionHandlerCouchbase::\$connection has unknown class Couchbase as its type.#'

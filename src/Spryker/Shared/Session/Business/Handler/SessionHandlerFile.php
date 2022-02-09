@@ -152,8 +152,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      */
     public function gc($maxLifetime)
     {
-        foreach ((array)glob($this->savePath . DIRECTORY_SEPARATOR . $this->keyPrefix . '*') as $file) {
-            /** @var string $file */
+        foreach (glob($this->savePath . DIRECTORY_SEPARATOR . $this->keyPrefix . '*') as $file) {
             if (filemtime($file) + $maxLifetime < time() && file_exists($file)) {
                 unlink($file);
             }
