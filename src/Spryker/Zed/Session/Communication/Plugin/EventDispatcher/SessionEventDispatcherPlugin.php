@@ -132,6 +132,11 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
                 return;
             }
 
+            // Skip session handling for requests without a session (e.g., CORS preflight OPTIONS)
+            if (!$event->getRequest()->hasSession()) {
+                return;
+            }
+
             $session = $event->getRequest()->getSession();
             if ($session->isStarted()) {
                 $session->save();
