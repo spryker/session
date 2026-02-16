@@ -73,6 +73,7 @@ class SessionStorage implements SessionStorageInterface
      */
     protected function registerSaveHandler(SessionHandlerInterface $handler)
     {
+        // @phpstan-ignore argument.type (SessionHandlerInterface methods are compatible with session_set_save_handler)
         session_set_save_handler(
             [$handler, 'open'],
             [$handler, 'close'],

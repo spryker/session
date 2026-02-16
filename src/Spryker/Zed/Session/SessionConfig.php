@@ -207,7 +207,7 @@ class SessionConfig extends AbstractBundleConfig
 
         return str_replace(
             array_keys($dataSourceNameElements),
-            array_values($dataSourceNameElements),
+            array_values($dataSourceNameElements), // @phpstan-ignore argument.type (array_values returns compatible array type)
             $dataSourceNameTemplate,
         );
     }

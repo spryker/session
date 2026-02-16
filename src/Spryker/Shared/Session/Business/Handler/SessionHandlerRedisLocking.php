@@ -164,6 +164,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
             ->redisClient
             ->setex($this->keyGenerator->generateSessionKey($sessionId), $this->ttlSeconds, $data);
 
+        // @phpstan-ignore instanceof.alwaysTrue (defensive programming for type safety)
         if ($result instanceof Status) {
             return $result->getPayload() === static::OK_WRITE_STATUS;
         }

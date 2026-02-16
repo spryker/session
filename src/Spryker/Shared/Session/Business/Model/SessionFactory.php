@@ -236,6 +236,7 @@ abstract class SessionFactory
      */
     protected function setSessionSaveHandler($handler)
     {
+        // @phpstan-ignore argument.type (SessionHandlerInterface methods are compatible with session_set_save_handler)
         session_set_save_handler(
             [$handler, 'open'],
             [$handler, 'close'],

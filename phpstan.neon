@@ -6,6 +6,7 @@ parameters:
         - '#Instantiated class Couchbase not found.#'
         - '#Call to method .+\(\) on an unknown class Couchbase.#'
         - '#Parameter \#1 \$keys of method Predis\\ClientInterface::del\(\) expects array, string given.#'
+        - '#Parameter \#3 \$read of function session_set_save_handler expects callable\(string\): string, array\{SessionHandlerInterface, ''read''\} given.#'
         - '#Parameter \#6 \$gc of function session_set_save_handler expects callable\(string\): bool, array\{SessionHandlerInterface, ''gc''\} given.#'
         - { message: '#Ternary operator condition is always true.#', path: '%rootDir%/../../../src/Spryker/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerCouchbase.php' }
         - { message: '#Ternary operator condition is always true.#', path: '%rootDir%/../../../src/Spryker/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerRedis.php' }
@@ -13,4 +14,6 @@ parameters:
         - { message: '#Unreachable statement - code above always terminates.#', path: '%rootDir%/../../../src/Spryker/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerRedisLocking.php' }
         -
             identifier: missingType.iterableValue
+        -
+            identifier: trait.unused
     reportUnmatchedIgnoredErrors: false
