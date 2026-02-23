@@ -114,7 +114,7 @@ class SessionServiceProviderTest extends Unit
         ];
 
         $applicationMock = $applicationMockBuilder->getMock();
-        $applicationMock->method('offsetGet')->will($this->returnValueMap($valueMap));
+        $applicationMock->method('offsetGet')->willReturnMap($valueMap);
 
         return $applicationMock;
     }
