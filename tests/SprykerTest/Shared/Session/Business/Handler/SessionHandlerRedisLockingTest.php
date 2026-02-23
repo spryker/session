@@ -69,7 +69,7 @@ class SessionHandlerRedisLockingTest extends Unit
             ->expects($this->once())
             ->method('__call')
             ->with($this->equalTo('get'), ['session:session_key'])
-            ->will($this->returnValue($returnValue));
+            ->willReturn($returnValue);
 
         return $redisClientMock;
     }
@@ -87,7 +87,7 @@ class SessionHandlerRedisLockingTest extends Unit
         $lockerMock
             ->expects($this->once())
             ->method('lock')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         return $lockerMock;
     }
