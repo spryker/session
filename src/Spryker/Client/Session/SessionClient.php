@@ -52,7 +52,9 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      */
     public function get($name, $default = null)
     {
-        return $this->getContainer()->get($name, $default);
+        // Using "?->" to prevent issues when the session is not initialized. API's shouldn't have sessions. Currently, we
+        // still have the session as some modules still require them.
+        return $this->getContainer()?->get($name, $default);
     }
 
     /**
