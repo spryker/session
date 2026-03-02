@@ -114,9 +114,6 @@ class SessionHandlerMysql implements SessionHandlerInterface
         return $this->connection ? true : false;
     }
 
-    /**
-     * @return bool
-     */
     public function close(): bool
     {
         unset($this->connection);
@@ -237,9 +234,6 @@ class SessionHandlerMysql implements SessionHandlerInterface
         return APPLICATION_ENV;
     }
 
-    /**
-     * @return string
-     */
     protected function getCodeBucket(): string
     {
         if (defined('APPLICATION_CODE_BUCKET')) {

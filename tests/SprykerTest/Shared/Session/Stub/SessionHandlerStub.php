@@ -11,9 +11,6 @@ use SessionHandlerInterface;
 
 class SessionHandlerStub implements SessionHandlerInterface
 {
-    /**
-     * @return bool
-     */
     public function close(): bool
     {
         return true;

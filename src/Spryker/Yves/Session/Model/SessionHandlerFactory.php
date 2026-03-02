@@ -22,10 +22,6 @@ class SessionHandlerFactory extends SessionFactory
      */
     protected $monitoringService;
 
-    /**
-     * @param int $sessionLifeTime
-     * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
-     */
     public function __construct(int $sessionLifeTime, SessionToMonitoringServiceInterface $monitoringService)
     {
         $this->sessionLifeTime = $sessionLifeTime;
@@ -40,9 +36,6 @@ class SessionHandlerFactory extends SessionFactory
         return $this->sessionLifeTime;
     }
 
-    /**
-     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
-     */
     public function getMonitoringService(): SessionToMonitoringServiceInterface
     {
         return $this->monitoringService;

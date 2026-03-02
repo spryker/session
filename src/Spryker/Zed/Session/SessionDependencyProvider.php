@@ -102,11 +102,6 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addSessionHandlerPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_SESSION_HANDLER, function (Container $container) {
@@ -124,11 +119,6 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
         return [];
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addYvesSessionLockReleaserPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_YVES_SESSION_LOCK_RELEASER, function (Container $container) {
@@ -138,11 +128,6 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addZedSessionLockReleaserPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_ZED_SESSION_LOCK_RELEASER, function (Container $container) {

@@ -15,17 +15,11 @@ use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 
 class SessionFactory extends AbstractFactory
 {
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
     public function createSession(): SessionInterface
     {
         return new Session($this->createMemorySessionStorage());
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
-     */
     public function createMemorySessionStorage(): SessionStorageInterface
     {
         return new MemorySessionStorage();

@@ -76,11 +76,6 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         $dispatcher->addListener(KernelEvents::RESPONSE, [$this, 'extendCookieLifetime'], -128);
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
-     *
-     * @return void
-     */
     public function extendCookieLifetime(ResponseEvent $event): void
     {
         if ($this->isMainRequest($event) === false) {
@@ -136,11 +131,6 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         return (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg');
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\KernelEvent $event
-     *
-     * @return bool
-     */
     protected function isMainRequest(KernelEvent $event): bool
     {
         if (method_exists($event, 'isMasterRequest')) {

@@ -17,11 +17,6 @@ use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
  */
 class MockArraySessionApplicationPlugin extends SessionApplicationPlugin
 {
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
-     */
     protected function createSessionStorage(ContainerInterface $container): SessionStorageInterface
     {
         return $this->getFactory()->createMockArraySessionStorage();

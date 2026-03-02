@@ -29,9 +29,6 @@ use Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker;
  */
 class RedisSpinLockLockerTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testLockBlocksUntilLockIsAcquired(): void
     {
         $redisClientMock = $this->getRedisClientMock();
@@ -53,9 +50,6 @@ class RedisSpinLockLockerTest extends Unit
         $locker->lock('session_id');
     }
 
-    /**
-     * @return void
-     */
     public function testUnlockUsesGeneratedKeyFromStoredSessionId(): void
     {
         if (!method_exists($this, 'contains')) {

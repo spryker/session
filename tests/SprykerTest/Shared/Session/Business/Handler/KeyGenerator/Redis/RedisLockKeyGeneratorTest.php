@@ -26,9 +26,6 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGe
  */
 class RedisLockKeyGeneratorTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testGenerateAddsSuffix(): void
     {
         $generator = new RedisLockKeyGenerator(new RedisSessionKeyGenerator());

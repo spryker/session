@@ -45,11 +45,6 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addSessionTestService(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::FLAG_SESSION_TEST, false);
@@ -57,11 +52,6 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addSessionService(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SESSION, function () {

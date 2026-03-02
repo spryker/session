@@ -16,11 +16,6 @@ use Spryker\Service\Container\ContainerInterface;
  */
 class ConsoleSessionApplicationPlugin extends SessionApplicationPlugin
 {
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addSessionTestFlag(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::FLAG_SESSION_TEST, true);

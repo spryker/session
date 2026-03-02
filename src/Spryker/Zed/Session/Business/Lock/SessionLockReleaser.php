@@ -24,10 +24,6 @@ class SessionLockReleaser implements SessionLockReleaserInterface
      */
     protected $lockReader;
 
-    /**
-     * @param \Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface $locker
-     * @param \Spryker\Zed\Session\Business\Lock\SessionLockReaderInterface $lockReader
-     */
     public function __construct(SessionLockerInterface $locker, SessionLockReaderInterface $lockReader)
     {
         $this->locker = $locker;

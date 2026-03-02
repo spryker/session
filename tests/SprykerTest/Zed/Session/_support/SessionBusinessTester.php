@@ -30,11 +30,6 @@ class SessionBusinessTester extends Actor
 {
     use _generated\SessionBusinessTesterActions;
 
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
-     */
     public function getMessageAttributesTransfer(array $seedData = []): MessageAttributesTransfer
     {
         return (new MessageAttributesBuilder($seedData))->build();

@@ -30,11 +30,6 @@ class OnKernelResponseEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
-     *
-     * @return void
-     */
     public function onKernelResponse(ResponseEvent $event): void
     {
         if (!$this->isMainRequest($event)) {
@@ -54,11 +49,6 @@ class OnKernelResponseEventSubscriber implements EventSubscriberInterface
         $session->save();
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\KernelEvent $event
-     *
-     * @return bool
-     */
     protected function isMainRequest(KernelEvent $event): bool
     {
         if (method_exists($event, 'isMasterRequest')) {

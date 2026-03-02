@@ -31,9 +31,6 @@ class SessionStorageHandlerPoolTest extends Unit
      */
     public const CONFIGURED_HANDLER_NAME = 'handler name';
 
-    /**
-     * @return void
-     */
     public function testGetHandlerReturnsAddedHandlerWhichMatchesConfiguredHandlerName(): void
     {
         $sessionHandlerInterfaceMock = $this->getSessionHandlerInterfaceMock();
@@ -44,9 +41,6 @@ class SessionStorageHandlerPoolTest extends Unit
         $this->assertInstanceOf(SessionHandlerInterface::class, $sessionStorageHandlerPool->getHandler(static::CONFIGURED_HANDLER_NAME));
     }
 
-    /**
-     * @return void
-     */
     public function testGetHandlerThrowsExceptionWhenTryingToGetNotAddedHandler(): void
     {
         $this->expectException(SessionHandlerNotFoundInSessionHandlerPoolException::class);

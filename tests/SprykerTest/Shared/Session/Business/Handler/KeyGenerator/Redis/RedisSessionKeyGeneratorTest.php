@@ -25,9 +25,6 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGe
  */
 class RedisSessionKeyGeneratorTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testGenerateAddsPrefix(): void
     {
         $generator = new RedisSessionKeyGenerator();

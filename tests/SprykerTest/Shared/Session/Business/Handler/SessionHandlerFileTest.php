@@ -52,9 +52,6 @@ class SessionHandlerFileTest extends Unit
      */
     public const SESSION_DATA = 'sessionData';
 
-    /**
-     * @return void
-     */
     public function tearDown(): void
     {
         if (is_dir($this->getFixtureDirectory())) {
@@ -63,25 +60,16 @@ class SessionHandlerFileTest extends Unit
         }
     }
 
-    /**
-     * @return string
-     */
     private function getFixtureDirectory(): string
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures';
     }
 
-    /**
-     * @return string
-     */
     protected function getSavePath(): string
     {
         return $this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'Sessions';
     }
 
-    /**
-     * @return void
-     */
     public function testCallOpenMustCreateDirectoryIfNotExists(): void
     {
         $this->assertFalse(is_dir($this->getSavePath()));
@@ -92,9 +80,6 @@ class SessionHandlerFileTest extends Unit
         $this->assertTrue(is_dir($this->getSavePath()));
     }
 
-    /**
-     * @return void
-     */
     public function testCallOpenMustReturnTrue(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
@@ -103,9 +88,6 @@ class SessionHandlerFileTest extends Unit
         $this->assertTrue($result);
     }
 
-    /**
-     * @return void
-     */
     public function testCallCloseMustReturnTrue(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
@@ -114,9 +96,6 @@ class SessionHandlerFileTest extends Unit
         $this->assertTrue($result);
     }
 
-    /**
-     * @return void
-     */
     public function testCallWriteMustReturnFalseIfNoDataPassed(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
@@ -126,9 +105,6 @@ class SessionHandlerFileTest extends Unit
         $this->assertFalse($result);
     }
 
-    /**
-     * @return void
-     */
     public function testCallWriteMustReturnTrueWhenDataCanBeWrittenToFile(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
@@ -138,9 +114,6 @@ class SessionHandlerFileTest extends Unit
         $this->assertTrue($result);
     }
 
-    /**
-     * @return void
-     */
     public function testWriteMustAllowZeroValue(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
@@ -150,9 +123,6 @@ class SessionHandlerFileTest extends Unit
         $this->assertTrue($result);
     }
 
-    /**
-     * @return void
-     */
     public function testCallReadMustReturnContentOfSessionForGivenSessionId(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
@@ -164,9 +134,6 @@ class SessionHandlerFileTest extends Unit
         $this->assertSame(static::SESSION_DATA, $result);
     }
 
-    /**
-     * @return void
-     */
     public function testCallDestroyMustReturnTrueIfNoFileExistsForSessionId(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
@@ -177,9 +144,6 @@ class SessionHandlerFileTest extends Unit
         $this->assertTrue($result);
     }
 
-    /**
-     * @return void
-     */
     public function testCallDestroyMustReturnTrueIfFileExistsForSessionId(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
@@ -191,9 +155,6 @@ class SessionHandlerFileTest extends Unit
         $this->assertTrue($result);
     }
 
-    /**
-     * @return void
-     */
     public function testCallGcMustDeleteFilesWhichAreOlderThenMaxLifetime(): void
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
@@ -215,25 +176,16 @@ class SessionHandlerFileTest extends Unit
         rmdir($this->getSavePath());
     }
 
-    /**
-     * @return void
-     */
     protected function makeFileOlderThanItIs(): void
     {
         touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . static::SESSION_ID, time() - 200);
     }
 
-    /**
-     * @return void
-     */
     protected function makeFileNewerThanItIs(): void
     {
         touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . static::SESSION_ID_2, time() + 200);
     }
 
-    /**
-     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceBridge
-     */
     protected function createMonitoringServiceMock(): SessionToMonitoringServiceBridge
     {
         $mock = $this->getMockBuilder(MonitoringServiceInterface::class)

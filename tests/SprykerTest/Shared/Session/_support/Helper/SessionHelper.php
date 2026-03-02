@@ -14,9 +14,6 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class SessionHelper extends Module
 {
-    /**
-     * @return void
-     */
     public function _initialize(): void
     {
         $sessionClient = new SessionClient();

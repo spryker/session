@@ -27,9 +27,6 @@ class SessionClientTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function testIsStartedSessionWhenContainerIsEmpty(): void
     {
         // Arrange
@@ -44,9 +41,6 @@ class SessionClientTest extends Unit
         $this->assertFalse($isSessionStarted);
     }
 
-    /**
-     * @return void
-     */
     public function testIsStartedWhenContainerIsNotEmptyAndSessionNotStarted(): void
     {
         // Arrange
@@ -61,9 +55,6 @@ class SessionClientTest extends Unit
         $this->assertFalse($isSessionStarted);
     }
 
-    /**
-     * @return void
-     */
     public function testIsStartedWhenContainerIsNotEmptyAndSessionIsStarted(): void
     {
         // Arrange
@@ -78,11 +69,6 @@ class SessionClientTest extends Unit
         $this->assertTrue($isSessionStarted);
     }
 
-    /**
-     * @param bool $isSessionStarted
-     *
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
     protected function getSessionMockWithIsStarted(bool $isSessionStarted): SessionInterface
     {
         $sessionMock = $this->getMockBuilder(SessionInterface::class)

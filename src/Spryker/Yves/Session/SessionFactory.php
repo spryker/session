@@ -127,25 +127,16 @@ class SessionFactory extends AbstractFactory
         return $this->getProvidedDependency(SessionDependencyProvider::PLUGINS_SESSION_HANDLER);
     }
 
-    /**
-     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
-     */
     public function getMonitoringService(): SessionToMonitoringServiceInterface
     {
         return $this->getProvidedDependency(SessionDependencyProvider::MONITORING_SERVICE);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
-     */
     public function createMemorySessionStorage(): SessionStorageInterface
     {
         return new MockFileSessionStorage();
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
-     */
     public function createNativeSessionStorage(): SessionStorageInterface
     {
         $sessionStorage = $this->createSessionStorage();
@@ -153,9 +144,6 @@ class SessionFactory extends AbstractFactory
         return new NativeSessionStorage($sessionStorage->getOptions(), $sessionStorage->getAndRegisterHandler());
     }
 
-    /**
-     * @return \Spryker\Yves\Session\Model\HealthCheck\HealthCheckInterface
-     */
     public function createSessionHealthChecker(): HealthCheckInterface
     {
         return new SessionHealthCheck(
@@ -163,17 +151,11 @@ class SessionFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
-     */
     public function createOnKernelResponseEventSubscriber(): EventSubscriberInterface
     {
         return new OnKernelResponseEventSubscriber();
     }
 
-    /**
-     * @return \Spryker\Client\Session\SessionClientInterface
-     */
     public function getSessionClient(): SessionClientInterface
     {
         return $this->getProvidedDependency(SessionDependencyProvider::CLIENT_SESSION);

@@ -34,11 +34,6 @@ class SessionHelper extends Module
      */
     protected const MODULE_NAME = 'Session';
 
-    /**
-     * @param \Codeception\TestInterface $test
-     *
-     * @return void
-     */
     public function _before(TestInterface $test): void
     {
         $this->ensureCleanSessionState();
@@ -86,9 +81,6 @@ class SessionHelper extends Module
         return $sessionApplicationPlugin;
     }
 
-    /**
-     * @return \Spryker\Zed\Session\SessionConfig
-     */
     protected function getConfig(): SessionConfig
     {
         /** @var \Spryker\Zed\Session\SessionConfig $sessionConfig */
@@ -97,9 +89,6 @@ class SessionHelper extends Module
         return $sessionConfig;
     }
 
-    /**
-     * @return \Spryker\Zed\Session\Communication\SessionCommunicationFactory
-     */
     protected function getFactory(): SessionCommunicationFactory
     {
         /** @var \Spryker\Zed\Session\Communication\SessionCommunicationFactory $sessionFactory */

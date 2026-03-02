@@ -26,9 +26,6 @@ use Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking;
  */
 class SessionHandlerRedisLockingTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testReadReturnsEmptyStringOnMissingSessionKey(): void
     {
         $redisClientMock = $this->getRedisClientMock(null);
@@ -40,9 +37,6 @@ class SessionHandlerRedisLockingTest extends Unit
         $this->assertSame('', $sessionData);
     }
 
-    /**
-     * @return void
-     */
     public function testReadDecodesLegacyJsonSession(): void
     {
         $redisClientMock = $this->getRedisClientMock(json_encode('foo bar baz'));
@@ -92,12 +86,6 @@ class SessionHandlerRedisLockingTest extends Unit
         return $lockerMock;
     }
 
-    /**
-     * @param \Predis\Client $redisClientMock
-     * @param \Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker $lockerMock
-     *
-     * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking
-     */
     private function getSessionHandlerRedisLocking(Client $redisClientMock, RedisSpinLockLocker $lockerMock): SessionHandlerRedisLocking
     {
         $sessionHandler = new SessionHandlerRedisLocking(

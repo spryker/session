@@ -50,9 +50,6 @@ class SessionHandlerMysqlTest extends Unit
      */
     protected $shouldDropSessionTable;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -74,9 +71,6 @@ class SessionHandlerMysqlTest extends Unit
         $this->shouldDropSessionTable = !$this->isSessionTableExists();
     }
 
-    /**
-     * @return void
-     */
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -86,9 +80,6 @@ class SessionHandlerMysqlTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testWriteShouldReturnFalseWhenNoDataPass(): void
     {
         // Arrange
@@ -101,9 +92,6 @@ class SessionHandlerMysqlTest extends Unit
         $this->assertFalse($result);
     }
 
-    /**
-     * @return void
-     */
     public function testWriteShouldReturnTrueWhenWriteData(): void
     {
         // Arrange
@@ -116,9 +104,6 @@ class SessionHandlerMysqlTest extends Unit
         $this->assertTrue($result);
     }
 
-    /**
-     * @return void
-     */
     public function testReadShouldReturnEmptyStringWhenNoDataForSession(): void
     {
         // Arrange
@@ -131,9 +116,6 @@ class SessionHandlerMysqlTest extends Unit
         $this->assertEmpty($result);
     }
 
-    /**
-     * @return void
-     */
     public function testReadShouldReturnContentOfSession(): void
     {
         // Arrange
@@ -147,9 +129,6 @@ class SessionHandlerMysqlTest extends Unit
         $this->assertSame(static::SESSION_DATA, $result);
     }
 
-    /**
-     * @return void
-     */
     public function testDestroyShouldRemoveDataForSession(): void
     {
         // Arrange
@@ -163,9 +142,6 @@ class SessionHandlerMysqlTest extends Unit
         $this->assertEmpty($sessionHandlerMySql->read(static::SESSION_ID));
     }
 
-    /**
-     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceBridge
-     */
     protected function createMonitoringServiceMock(): SessionToMonitoringServiceBridge
     {
         $monitoringServiceInterfaceMock = $this->getMockBuilder(MonitoringServiceInterface::class)
@@ -209,9 +185,6 @@ class SessionHandlerMysqlTest extends Unit
         return $sessionHandlerMySqlMock;
     }
 
-    /**
-     * @return bool
-     */
     protected function isSessionTableExists(): bool
     {
         $searchSessionTableQuery = sprintf(
@@ -224,9 +197,6 @@ class SessionHandlerMysqlTest extends Unit
         return (bool)$statement->fetch();
     }
 
-    /**
-     * @return void
-     */
     protected function dropSessionTable(): void
     {
         $dropSessionTableQuery = 'DROP TABLE IF EXISTS session';

@@ -224,9 +224,6 @@ abstract class SessionFactory
      */
     abstract protected function getSessionLifetime();
 
-    /**
-     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
-     */
     abstract public function getMonitoringService(): SessionToMonitoringServiceInterface;
 
     /**
@@ -323,9 +320,6 @@ abstract class SessionFactory
         return Store::getInstance()->getStoreName();
     }
 
-    /**
-     * @return string
-     */
     protected function getCodeBucket(): string
     {
         if (defined('APPLICATION_CODE_BUCKET')) {

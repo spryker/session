@@ -23,17 +23,11 @@ class SessionHealthCheck implements HealthCheckInterface
      */
     protected $sessionClient;
 
-    /**
-     * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
-     */
     public function __construct(SessionClientInterface $sessionClient)
     {
         $this->sessionClient = $sessionClient;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
-     */
     public function executeHealthCheck(): HealthCheckServiceResponseTransfer
     {
         $healthCheckServiceResponseTransfer = (new HealthCheckServiceResponseTransfer())

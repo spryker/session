@@ -150,9 +150,6 @@ class SessionBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
-     */
     public function getMonitoringService(): SessionToMonitoringServiceInterface
     {
         return $this->getProvidedDependency(SessionDependencyProvider::MONITORING_SERVICE);
@@ -201,9 +198,6 @@ class SessionBusinessFactory extends AbstractBusinessFactory
             ->createRedisLockKeyGenerator();
     }
 
-    /**
-     * @return \Spryker\Zed\Session\Business\Model\HealthCheck\HealthCheckInterface
-     */
     public function createSessionHealthChecker(): HealthCheckInterface
     {
         return new SessionHealthCheck(
@@ -219,9 +213,6 @@ class SessionBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(SessionDependencyProvider::SESSION_CLIENT);
     }
 
-    /**
-     * @return \Spryker\Zed\Session\Business\Expander\MessageAttributesExpanderInterface
-     */
     public function createMessageAttributesExpander(): MessageAttributesExpanderInterface
     {
         return new MessageAttributesExpander(

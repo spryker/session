@@ -70,19 +70,11 @@ class MemorySessionStorage implements SessionStorageInterface
         $this->setMetadataBag($metaBag);
     }
 
-    /**
-     * @param array $array
-     *
-     * @return void
-     */
     public function setSessionData(array $array): void
     {
         $this->data = $array;
     }
 
-    /**
-     * @return bool
-     */
     public function start(): bool
     {
         if ($this->started) {
@@ -98,12 +90,6 @@ class MemorySessionStorage implements SessionStorageInterface
         return true;
     }
 
-    /**
-     * @param bool $destroy
-     * @param int|null $lifetime
-     *
-     * @return bool
-     */
     public function regenerate(bool $destroy = false, ?int $lifetime = null): bool
     {
         if (!$this->started) {
@@ -116,9 +102,6 @@ class MemorySessionStorage implements SessionStorageInterface
         return true;
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
@@ -140,19 +123,11 @@ class MemorySessionStorage implements SessionStorageInterface
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return void
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
@@ -173,9 +148,6 @@ class MemorySessionStorage implements SessionStorageInterface
         $this->started = false;
     }
 
-    /**
-     * @return void
-     */
     public function clear(): void
     {
         foreach (static::$bags as $bag) {
@@ -189,11 +161,6 @@ class MemorySessionStorage implements SessionStorageInterface
         $this->loadSession();
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionBagInterface $bag
-     *
-     * @return void
-     */
     public function registerBag(SessionBagInterface $bag): void
     {
         static::$bags[$bag->getName()] = $bag;
@@ -219,19 +186,11 @@ class MemorySessionStorage implements SessionStorageInterface
         return static::$bags[$name];
     }
 
-    /**
-     * @return bool
-     */
     public function isStarted(): bool
     {
         return $this->started;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag|null $bag
-     *
-     * @return void
-     */
     public function setMetadataBag(?MetadataBag $bag = null): void
     {
         if ($bag === null) {
@@ -241,25 +200,16 @@ class MemorySessionStorage implements SessionStorageInterface
         static::$metadataBag = $bag;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag
-     */
     public function getMetadataBag(): MetadataBag
     {
         return static::$metadataBag;
     }
 
-    /**
-     * @return string
-     */
     protected function generateId(): string
     {
         return hash('sha256', uniqid('ss_mock_', true));
     }
 
-    /**
-     * @return void
-     */
     protected function loadSession(): void
     {
         $bags = array_merge(static::$bags, [static::$metadataBag]);

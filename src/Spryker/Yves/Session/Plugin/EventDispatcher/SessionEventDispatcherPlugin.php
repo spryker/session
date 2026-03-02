@@ -77,12 +77,6 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         return $eventDispatcher;
     }
 
-    /**
-     * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
-     */
     protected function addEarlyKernelRequestEventListener(
         EventDispatcherInterface $eventDispatcher,
         ContainerInterface $container
@@ -94,12 +88,6 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         return $eventDispatcher;
     }
 
-    /**
-     * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
-     */
     protected function addKernelRequestEventListener(
         EventDispatcherInterface $eventDispatcher,
         ContainerInterface $container
@@ -122,11 +110,6 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         return $eventDispatcher;
     }
 
-    /**
-     * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     *
-     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
-     */
     protected function addKernelResponseEventListener(
         EventDispatcherInterface $eventDispatcher
     ): EventDispatcherInterface {
@@ -144,11 +127,6 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         return $eventDispatcher;
     }
 
-    /**
-     * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     *
-     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
-     */
     protected function addKernelTerminateEventListener(
         EventDispatcherInterface $eventDispatcher
     ): EventDispatcherInterface {
@@ -192,31 +170,16 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         return $cookie;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
     protected function getSession(ContainerInterface $container): SessionInterface
     {
         return $container->get(static::SERVICE_SESSION);
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return bool
-     */
     protected function isSessionTestEnabled(ContainerInterface $container): bool
     {
         return $container->has(static::FLAG_SESSION_TEST) && $container->get(static::FLAG_SESSION_TEST);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     *
-     * @return bool
-     */
     protected function isSessionCookieSet(SessionInterface $session): bool
     {
         $cookiePattern = $session->getName() . '=' . $session->getId();
@@ -230,11 +193,6 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         return false;
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\KernelEvent $event
-     *
-     * @return bool
-     */
     protected function isMainRequest(KernelEvent $event): bool
     {
         if (method_exists($event, 'isMasterRequest')) {

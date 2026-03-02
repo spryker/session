@@ -118,9 +118,6 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
-     */
     public function getMonitoringService(): SessionToMonitoringServiceInterface
     {
         return $this->getProvidedDependency(SessionDependencyProvider::MONITORING_SERVICE);
@@ -142,17 +139,11 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(SessionDependencyProvider::SESSION_CLIENT);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
-     */
     public function createMockSessionStorage(): SessionStorageInterface
     {
         return new MockFileSessionStorage();
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
-     */
     public function createNativeSessionStorage(): SessionStorageInterface
     {
         $sessionStorage = $this->createSessionStorage();
@@ -160,17 +151,11 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
         return new NativeSessionStorage($sessionStorage->getOptions(), $sessionStorage->getAndRegisterHandler());
     }
 
-    /**
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
-     */
     public function createSaveSessionEventSubscriber(): EventSubscriberInterface
     {
         return new SaveSessionListener();
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
-     */
     public function createMockArraySessionStorage(): SessionStorageInterface
     {
         return new MockArraySessionStorage();

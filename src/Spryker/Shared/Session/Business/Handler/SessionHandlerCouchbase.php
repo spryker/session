@@ -121,9 +121,6 @@ class SessionHandlerCouchbase implements SessionHandlerInterface
         return $this->connection ? true : false;
     }
 
-    /**
-     * @return bool
-     */
     public function close(): bool
     {
         unset($this->connection);

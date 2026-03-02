@@ -72,12 +72,6 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         return $eventDispatcher;
     }
 
-    /**
-     * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
-     */
     protected function addEarlyKernelRequestEventListener(
         EventDispatcherInterface $eventDispatcher,
         ContainerInterface $container
@@ -89,12 +83,6 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         return $eventDispatcher;
     }
 
-    /**
-     * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
-     */
     protected function addKernelRequestEventListener(
         EventDispatcherInterface $eventDispatcher,
         ContainerInterface $container
@@ -117,12 +105,6 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         return $eventDispatcher;
     }
 
-    /**
-     * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
-     */
     protected function addKernelResponseEventListener(
         EventDispatcherInterface $eventDispatcher,
         ContainerInterface $container
@@ -172,31 +154,16 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         );
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
     protected function getSession(ContainerInterface $container): SessionInterface
     {
         return $container->get(static::SERVICE_SESSION);
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return bool
-     */
     protected function isSessionTestEnabled(ContainerInterface $container): bool
     {
         return $container->has(static::FLAG_SESSION_TEST) && $container->get(static::FLAG_SESSION_TEST);
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\KernelEvent $event
-     *
-     * @return bool
-     */
     protected function isMainRequest(KernelEvent $event): bool
     {
         if (method_exists($event, 'isMasterRequest')) {

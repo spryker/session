@@ -30,9 +30,6 @@ class SessionClientTester extends Actor
 {
     use _generated\SessionClientTesterActions;
 
-    /**
-     * @return \Spryker\Client\Session\SessionClientInterface
-     */
     public function getClient(): SessionClientInterface
     {
         return $this->getLocator()->session()->client();

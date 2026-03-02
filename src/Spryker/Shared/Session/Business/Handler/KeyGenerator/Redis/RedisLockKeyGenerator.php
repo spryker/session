@@ -25,9 +25,6 @@ class RedisLockKeyGenerator implements LockKeyGeneratorInterface
      */
     protected $sessionKeyGenerator;
 
-    /**
-     * @param \Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface $sessionKeyGenerator
-     */
     public function __construct(SessionKeyGeneratorInterface $sessionKeyGenerator)
     {
         $this->sessionKeyGenerator = $sessionKeyGenerator;

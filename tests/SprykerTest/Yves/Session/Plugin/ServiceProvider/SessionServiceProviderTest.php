@@ -51,9 +51,6 @@ class SessionServiceProviderTest extends Unit
      */
     protected const DUMMY_SESSION_HANDLER_NAME = 'DUMMY_SESSION_HANDLER_NAME';
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -61,9 +58,6 @@ class SessionServiceProviderTest extends Unit
         session_write_close();
     }
 
-    /**
-     * @return void
-     */
     public function testRegisterShouldSetSessionStorageOptions(): void
     {
         $application = new Application();
@@ -75,9 +69,6 @@ class SessionServiceProviderTest extends Unit
         $this->assertIsArray($application['session.storage.options']);
     }
 
-    /**
-     * @return void
-     */
     public function testRegisterShouldSetSessionStorageHandler(): void
     {
         $application = new Application();
@@ -88,9 +79,6 @@ class SessionServiceProviderTest extends Unit
         $this->assertArrayHasKey('session.storage.handler', $application);
     }
 
-    /**
-     * @return void
-     */
     public function testBootShouldAddSessionToSessionClient(): void
     {
         $applicationMock = $this->getApplicationMock();
@@ -170,9 +158,6 @@ class SessionServiceProviderTest extends Unit
         $this->assertInstanceOf(SessionHandlerFile::class, $application['session.storage.handler']);
     }
 
-    /**
-     * @return void
-     */
     public function testCanBeUsedWithSessionHandlerProviderPlugin(): void
     {
         // Arrange
@@ -188,9 +173,6 @@ class SessionServiceProviderTest extends Unit
         $this->assertInstanceOf(SessionHandlerInterface::class, $application['session.storage.handler']);
     }
 
-    /**
-     * @return void
-     */
     protected function setupSessionHandlerPluginDependency(): void
     {
         $sessionHandlerProviderPluginMock = $this->createMock(SessionHandlerProviderPluginInterface::class);
@@ -204,9 +186,6 @@ class SessionServiceProviderTest extends Unit
         });
     }
 
-    /**
-     * @return \Spryker\Yves\Session\Plugin\ServiceProvider\SessionServiceProvider
-     */
     protected function createSessionServiceProviderWithFactoryMock(): SessionServiceProvider
     {
         $sessionServiceProvider = new SessionServiceProvider();

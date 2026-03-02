@@ -83,17 +83,11 @@ class SessionConfig extends AbstractBundleConfig
         return ($this->get(SessionConstants::YVES_SESSION_COOKIE_SECURE, true) && $this->get(SessionConstants::YVES_SSL_ENABLED, true));
     }
 
-    /**
-     * @return string
-     */
     protected function getSessionCookieDomain(): string
     {
         return $this->get(SessionConstants::YVES_SESSION_COOKIE_DOMAIN, '');
     }
 
-    /**
-     * @return string
-     */
     protected function getSessionCookiePath(): string
     {
         return $this->get(SessionConstants::YVES_SESSION_COOKIE_PATH, '/');

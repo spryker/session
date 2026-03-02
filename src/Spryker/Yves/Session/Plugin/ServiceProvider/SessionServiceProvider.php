@@ -54,11 +54,6 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         ], -128);
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
-     *
-     * @return void
-     */
     public function extendCookieLifetime(ResponseEvent $event): void
     {
         if ($this->isMainRequest($event) === false || !$event->getRequest()->hasSession()) {
@@ -116,11 +111,6 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         };
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\KernelEvent $event
-     *
-     * @return bool
-     */
     protected function isMainRequest(KernelEvent $event): bool
     {
         if (method_exists($event, 'isMasterRequest')) {

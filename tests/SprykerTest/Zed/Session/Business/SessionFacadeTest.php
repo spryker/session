@@ -61,9 +61,6 @@ class SessionFacadeTest extends Unit
      */
     protected $notSupportingLockReleaserPlugin;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -150,9 +147,6 @@ class SessionFacadeTest extends Unit
         $sessionFacade->removeZedSessionLockFor(session_id());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandMessageAttributesSuccessfullyWhenSessionDoesntHaveSessionTrackingIdAndNotStarted(): void
     {
         //Arrange
@@ -174,9 +168,6 @@ class SessionFacadeTest extends Unit
         $this->assertNotNull($expandedMessageAttributesTransfer->getSessionTrackingId());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandMessageAttributesSuccessfullyWhenSessionDoesntHaveSessionTrackingIdAndStarted(): void
     {
         //Arrange
@@ -200,9 +191,6 @@ class SessionFacadeTest extends Unit
         $this->assertNotNull($expandedMessageAttributesTransfer->getSessionTrackingId());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandMessageAttributesSuccessfullyWhenSessionHasSessionTrackingId(): void
     {
         //Arrange
@@ -227,9 +215,6 @@ class SessionFacadeTest extends Unit
         $this->assertSame($sessionId, $expandedMessageAttributesTransfer->getSessionTrackingId());
     }
 
-    /**
-     * @return void
-     */
     public function testMessageAttributesNotExpandedWhenSessionTrackingIdIsPresent(): void
     {
         //Arrange
@@ -250,9 +235,6 @@ class SessionFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return array
-     */
     public function supportingLockSessionHandler(): array
     {
         return [
@@ -260,9 +242,6 @@ class SessionFacadeTest extends Unit
         ];
     }
 
-    /**
-     * @return array
-     */
     public function notSupportingLockSessionHandler(): array
     {
         return [
@@ -271,9 +250,6 @@ class SessionFacadeTest extends Unit
         ];
     }
 
-    /**
-     * @return void
-     */
     protected function removeCachedSessionTrackingId(): void
     {
         $messageAttributesExpander = new MessageAttributesExpander(
@@ -309,9 +285,6 @@ class SessionFacadeTest extends Unit
         return $notSupportingLockReleaserPluginMock;
     }
 
-    /**
-     * @return void
-     */
     protected function setupSessionPluginDependencies(): void
     {
         $this->tester->setDependency(SessionDependencyProvider::PLUGINS_YVES_SESSION_LOCK_RELEASER, function (Container $container) {

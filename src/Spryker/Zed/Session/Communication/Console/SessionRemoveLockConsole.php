@@ -44,9 +44,6 @@ class SessionRemoveLockConsole extends Console
      */
     public const ARGUMENT_SESSION_ID = 'session_id';
 
-    /**
-     * @return void
-     */
     protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
@@ -72,12 +69,6 @@ session:lock:remove --zed <session_id>
 HELPTEXT;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return int
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var string $sessionId */

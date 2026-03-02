@@ -28,19 +28,11 @@ class MessageAttributesExpander implements MessageAttributesExpanderInterface
      */
     protected $sessionClient;
 
-    /**
-     * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
-     */
     public function __construct(SessionClientInterface $sessionClient)
     {
         $this->sessionClient = $sessionClient;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MessageAttributesTransfer $messageAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
-     */
     public function expand(MessageAttributesTransfer $messageAttributesTransfer): MessageAttributesTransfer
     {
         if ($messageAttributesTransfer->getSessionTrackingId()) {
@@ -52,9 +44,6 @@ class MessageAttributesExpander implements MessageAttributesExpanderInterface
         return $messageAttributesTransfer->setSessionTrackingId(static::$cachedSessionTrackingId);
     }
 
-    /**
-     * @return void
-     */
     protected function persistSessionTrackingId(): void
     {
         if (static::$cachedSessionTrackingId) {

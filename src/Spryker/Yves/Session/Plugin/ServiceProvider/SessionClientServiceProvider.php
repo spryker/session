@@ -46,11 +46,6 @@ class SessionClientServiceProvider extends AbstractPlugin implements ServiceProv
         $sessionClient->setContainer($this->getSessionService($app));
     }
 
-    /**
-     * @param \Silex\Application $container
-     *
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
     protected function getSessionService(Application $container): SessionInterface
     {
         return $container->get(static::SERVICE_SESSION);

@@ -26,10 +26,6 @@ class RedisSessionLockReader implements SessionLockReaderInterface
      */
     protected $keyGenerator;
 
-    /**
-     * @param \Predis\Client $redisClient
-     * @param \Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface $keyGenerator
-     */
     public function __construct(Client $redisClient, LockKeyGeneratorInterface $keyGenerator)
     {
         $this->redisClient = $redisClient;

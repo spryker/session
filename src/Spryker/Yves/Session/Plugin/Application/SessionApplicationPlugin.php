@@ -51,11 +51,6 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addSessionTestFlag(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::FLAG_SESSION_TEST, false);
@@ -63,11 +58,6 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
     protected function addSessionService(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SESSION, function (ContainerInterface $container) {
@@ -77,11 +67,6 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
         return $container;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
-     */
     protected function createSessionStorage(ContainerInterface $container): SessionStorageInterface
     {
         if ($this->isSessionTestEnabled($container)) {
@@ -91,21 +76,11 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
         return $this->getFactory()->createNativeSessionStorage();
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return bool
-     */
     protected function isSessionTestEnabled(ContainerInterface $container): bool
     {
         return $container->has(static::FLAG_SESSION_TEST) && $container->get(static::FLAG_SESSION_TEST);
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
     protected function getSessionService(ContainerInterface $container): SessionInterface
     {
         return $container->get(static::SERVICE_SESSION);
