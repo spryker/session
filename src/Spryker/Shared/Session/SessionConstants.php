@@ -91,6 +91,8 @@ interface SessionConstants
     public const YVES_SESSION_FILE_PATH = 'SESSION:YVES_SESSION_FILE_PATH';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_PERSISTENT_CONNECTION} instead.
+     *
      * @var string
      */
     public const YVES_SESSION_PERSISTENT_CONNECTION = 'SESSION:YVES_SESSION_PERSISTENT_CONNECTION';
@@ -219,6 +221,8 @@ interface SessionConstants
     public const ZED_SESSION_FILE_PATH = 'SESSION:ZED_SESSION_FILE_PATH';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_PERSISTENT_CONNECTION} instead.
+     *
      * @var string
      */
     public const ZED_SESSION_PERSISTENT_CONNECTION = 'SESSION:ZED_SESSION_PERSISTENT_CONNECTION';
