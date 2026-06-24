@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
     /**
+     * @api
+     *
      * @var string
      */
     public const SESSION_HEALTH_CHECK_SERVICE_NAME = 'session';

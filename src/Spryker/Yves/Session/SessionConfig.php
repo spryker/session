@@ -13,31 +13,43 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class SessionConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @var string
      */
     public const PROTOCOL_TCP = 'tcp';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const DATA_SOURCE_NAME_TEMPLATE_TCP = 'tcp://[host]:[port]?database=[database][authFragment]';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const AUTH_FRAGMENT_TEMPLATE_TCP = '&password=%s';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const DATA_SOURCE_NAME_TEMPLATE_REDIS = 'redis://[authFragment][host]:[port]/[database]';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const AUTH_FRAGMENT_TEMPLATE_REDIS = ':%s@';
 
     /**
+     * @api
+     *
      * Default Redis database number
      *
      * @var int
